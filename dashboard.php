@@ -1,7 +1,7 @@
 <?php
 include 'db.php';
 
-// 1. เช็คสิทธิ์ (Approver/Admin)
+// 1. เช็คสิทธิ์
 if (!isset($_COOKIE['user_id'])) { header("Location: index.php"); exit(); }
 if ($_COOKIE['role'] != 'approver' && $_COOKIE['role'] != 'admin') { header("Location: index.php"); exit(); }
 
@@ -24,13 +24,21 @@ $result = $conn->query("SELECT * FROM orders WHERE status = 'pending' ORDER BY o
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard ผู้อนุมัติ</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <meta http-equiv="refresh" content="30">
+    
 </head>
 <body class="container mt-4">
     
     <div class="d-flex justify-content-between align-items-center mb-4 border-bottom pb-3">
         <div class="d-flex align-items-center">
             <img src="logo.png" alt="Logo" style="height: 50px; margin-right: 15px;">
-            <h2 class="text-primary m-0">📋 Dashboard</h2>
+            <div>
+                <h2 class="text-primary m-0">📋 Dashboard</h2>
+                <small class="text-muted" style="font-size: 0.8rem;">
+                    🔄 อัปเดตล่าสุด: <?php echo date('H:i:s'); ?> (รีเฟรชทุก 30 วิ)
+                </small>
+            </div>
         </div>
         <div class="text-end">
             <span class="small text-muted">สวัสดีคุณ <?php echo $_COOKIE['name']; ?></span>
@@ -41,7 +49,7 @@ $result = $conn->query("SELECT * FROM orders WHERE status = 'pending' ORDER BY o
     <div class="row mb-4">
         <div class="col-md-6">
             <a href="manage_products.php" class="btn btn-primary w-100 py-3 shadow-sm">
-                 จัดการเมนูสินค้า (เพิ่ม/ลบ)
+                จัดการเมนูสินค้า (เพิ่ม/ลบ)
             </a>
         </div>
         <div class="col-md-6">
@@ -62,7 +70,7 @@ $result = $conn->query("SELECT * FROM orders WHERE status = 'pending' ORDER BY o
                         <tr>
                             <th class="ps-4">เวลา</th>
                             <th>ผู้สั่ง</th>
-                            <th>เมนู</th>
+                            <th>สินค้า</th>
                             <th>จำนวน</th>
                             <th class="text-end pe-4">จัดการ</th>
                         </tr>
