@@ -4,6 +4,7 @@
     { "src": "logo.png", "use": "@vercel/static" }
   ],
   "routes": [
+    { "src": "/logo.png", "dest": "/logo.png" },
     { "src": "/(.*)", "dest": "/$1" }
   ]
 }
